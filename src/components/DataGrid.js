@@ -7,7 +7,9 @@ export default  class DataGrid extends Component {
 
         const data = this.props.data;
         const repositories = this.props.repo;
-                
+        let message = (repositories.length < 6 ? "Only " + repositories.length + " repositorie(s) were found" : "The " + repositories.length + " most relevant Repositories");   
+        message =  (data.name !== "" && repositories.length === 0 ? "User doesn't have repositories": message); 
+
         return (
             <>
                 <table className="ui celled table">
@@ -38,12 +40,13 @@ export default  class DataGrid extends Component {
                     </tr>
                     </tbody>
                 </table>
-                        <h2 
-                            className="ui header"
-                            style={{display:repositories.length > 0 ? "block": "none"}}
-                        >
-                            The {repositories.length < 6 ? repositories.length : 6} most relevant Repositories
-                        </h2>
+                
+                <h2 
+                    className="ui header"
+                    style={{display: data.name !== undefined && data.name !== "" ? "block": "none"}}
+                >
+                    {message}
+                </h2>
                 <div className="ui three column doubling grid container">
                     {
                         repositories.map(repo => (      
